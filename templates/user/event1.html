@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Ceremony | Rotaract Club of NLJIET</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ---- CSS STYLES ---- */
+        
+        /* 1. Global Styles & Variables */
+        :root {
+            --rotaract-blue: #00458B;
+            --rotaract-gold: #FDB813;
+            --dark-navy: #1A293D;
+            --slate-gray: #5A6A7A;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            background: var(--white);
+            color: var(--dark-navy);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 1.5rem;
+        }
+
+        .content-section {
+            padding: 6rem 0;
+            overflow: hidden;
+        }
+        
+        /* 2. Header & Banner */
+        .event-banner {
+            position: relative;
+            height: 95vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            /* Placeholder Banner Image for a formal ceremony */
+            background: linear-gradient(rgba(26, 41, 61, 0.7), rgba(26, 41, 61, 0.7)), 
+                        url("{{ url_for('static', filename='images/Image12.jpg') }}"), 
+                        no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed; /* Parallax Effect */
+        }
+
+        .banner-content {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInSlideUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.5s forwards;
+        }
+
+        @keyframes fadeInSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .event-banner h1 {
+            font-family: var(--font-heading);
+            font-size: 5.5rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 8px rgba(0,0,0,0.6);
+        }
+
+        .event-banner p {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-top: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        /* 3. Shared Section Heading Style */
+        .section-heading {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-heading h2 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            color: var(--dark-navy);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-heading h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--rotaract-gold);
+        }
+
+        /* 4. Event Description Section */
+        #event-description {
+            background-color: var(--bg-light);
+        }
+        #event-description p {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--slate-gray);
+        }
+
+        /* 5. Dynamic Timeline Section */
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background: #e9ecef;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+        .timeline-item {
+            padding: 1rem 2.5rem;
+            position: relative;
+            width: 50%;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .timeline-item:nth-child(odd) { left: 0; }
+        .timeline-item:nth-child(even) { left: 50%; }
+
+        .timeline-icon {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: var(--white);
+            border: 3px solid var(--rotaract-blue);
+            border-radius: 50%;
+            top: 2rem;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--rotaract-blue);
+        }
+        .timeline-item:nth-child(odd) .timeline-icon { right: -25px; }
+        .timeline-item:nth-child(even) .timeline-icon { left: -25px; }
+
+        .timeline-content {
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+            position: relative;
+        }
+        .timeline-content h3 { font-size: 1.25rem; font-weight: 600; color: var(--rotaract-blue); margin-bottom: 0.5rem; }
+        .timeline-content p { font-size: 0.95rem; color: var(--slate-gray); }
+
+        /* 6. Leadership/Pillars Section with Elegant Cards */
+        #leadership-pillars {
+            background: var(--bg-light);
+        }
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .pillar-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border-bottom: 4px solid var(--rotaract-gold);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pillar-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(26, 41, 61, 0.1);
+        }
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--rotaract-blue);
+            margin-bottom: 1.5rem;
+        }
+        .pillar-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--dark-navy); font-weight: 600; }
+        .pillar-card p { color: var(--slate-gray); font-size: 0.9rem; }
+        
+        /* 7. Image Gallery */
+        .gallery-container {
+            max-width: 900px;
+            margin: auto;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        .gallery-slide { display: none; animation: galleryFade 1.5s; }
+        @keyframes galleryFade { from { opacity: 0.4; } to { opacity: 1; } }
+        .gallery-slide img { width: 100%; vertical-align: middle; }
+
+        .gallery-nav {
+            cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%);
+            padding: 1rem; color: white; font-weight: bold; font-size: 1.5rem;
+            transition: background-color 0.3s ease; user-select: none;
+            background-color: rgba(26, 41, 61, 0.5);
+        }
+        .prev { left: 0; border-radius: 0 3px 3px 0; }
+        .next { right: 0; border-radius: 3px 0 0 3px; }
+        .gallery-nav:hover { background-color: rgba(26, 41, 61, 0.8); }
+
+        .dots-container { text-align: center; padding: 1.5rem 0 0; }
+        .dot {
+            cursor: pointer; height: 12px; width: 12px; margin: 0 5px;
+            background-color: #ccc; border-radius: 50%; display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .active, .dot:hover { background-color: var(--rotaract-gold); transform: scale(1.2); }
+
+        /* 8. Footer */
+        .site-footer {
+            background-color: var(--dark-navy);
+            color: var(--white);
+            text-align: center;
+            padding: 2.5rem;
+            margin-top: 4rem;
+        }
+        .site-footer p {
+            margin: 0;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        /* 9. Responsive Design */
+        @media (max-width: 992px) {
+            .event-banner h1 { font-size: 4rem; }
+            .section-heading h2 { font-size: 3rem; }
+        }
+
+        @media (max-width: 768px) {
+            .event-banner h1 { font-size: 3rem; }
+            .event-banner p { font-size: 1.1rem; }
+            .content-section { padding: 4rem 0; }
+            .section-heading h2 { font-size: 2.5rem; }
+
+            .timeline-container::after { left: 25px; }
+            .timeline-item { width: 100%; padding-left: 4.5rem; padding-right: 1rem; }
+            .timeline-item:nth-child(even) { left: 0; }
+            .timeline-icon { left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="event-banner">
+        <div class="banner-content">
+            <h1>Installation Ceremony</h1>
+            <p>A New Chapter of Leadership & Service</p>
+        </div>
+    </header>
+
+    <main>
+        <section id="event-description" class="content-section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>A Tradition of Excellence</h2>
+                </div>
+                <p>
+                    The Installation Ceremony on 17th November 2024 marked the official commencement of a new Rotaract year. This prestigious event symbolized the seamless transition of leadership, honoring past achievements while embracing a future filled with promise, dedication, and impactful service.
+                </p>
+            </div>
+        </section>
+
+        <section id="event-timeline" class="content-section">
+            <div class="container">
+                 <div class="section-heading">
+                    <h2>Ceremony Highlights</h2>
+                </div>
+                <div class="timeline-container">
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-flag-checkered"></i></div>
+                        <div class="timeline-content">
+                            <h3>Reflection & Gratitude</h3>
+                            <p>The ceremony began with a heartfelt address from the outgoing president, reflecting on a successful year and thanking the team.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-gavel"></i></div>
+                        <div class="timeline-content">
+                            <h3>The Installation of Leaders</h3>
+                            <p>The new executive board took their oath, formally accepting their roles and pledging their commitment to the club's values.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-lightbulb"></i></div>
+                        <div class="timeline-content">
+                            <h3>A Vision for the Future</h3>
+                            <p>The incoming president shared an inspiring vision for the year ahead, focusing on innovation, teamwork, and service.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-users"></i></div>
+                        <div class="timeline-content">
+                            <h3>Wisdom from Dignitaries</h3>
+                            <p>Esteemed Rotarians and guests graced the event, offering guidance and encouragement to the newly installed team.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="leadership-pillars" class="content-section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Pillars of the New Year</h2>
+                </div>
+                <div class="pillars-grid">
+                    <div class="pillar-card">
+                        <i class="fas fa-award card-icon"></i>
+                        <h3>Integrity & Leadership</h3>
+                        <p>Upholding the highest standards of leadership as we guide the club forward.</p>
+                    </div>
+                    <div class="pillar-card">
+                        <i class="fas fa-hands-helping card-icon"></i>
+                        <h3>Service-Driven Initiatives</h3>
+                        <p>A renewed focus on creating impactful projects that serve our community's needs.</p>
+                    </div>
+                    <div class="pillar-card">
+                        <i class="fas fa-handshake card-icon"></i>
+                        <h3>Strengthening Fellowship</h3>
+                        <p>Fostering a collaborative and supportive environment for all members to grow.</p>
+                    </div>
+                    <div class="pillar-card">
+                        <i class="fas fa-chart-line card-icon"></i>
+                        <h3>Innovation & Growth</h3>
+                        <p>Embracing new ideas to expand our reach and enhance the club's legacy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="event-gallery" class="content-section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Event Gallery</h2>
+                </div>
+                <div class="gallery-container">
+                    <div class="gallery-slide">
+                        <img src="{{ url_for('static', filename='images/Image13.jpg') }}">
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="{{ url_for('static', filename='images/Image14.jpg') }}">
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="{{ url_for('static', filename='images/Image1.jpg') }}">
+                    </div>
+
+                    <a class="gallery-nav prev" onclick="navigateSlides(-1)">&#10094;</a>
+                    <a class="gallery-nav next" onclick="navigateSlides(1)">&#10095;</a>
+                </div>
+                
+                <div class="dots-container">
+                    <span class="dot active" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; Rotaract Club of NLJIET | Leadership, Fellowship, Service</p>
+    </footer>
+
+    <script>
+        // ---- JAVASCRIPT LOGIC ----
+
+        // 1. Image Gallery Logic
+        let currentSlideIndex = 1;
+        showSlide(currentSlideIndex);
+
+        function navigateSlides(n) {
+            showSlide(currentSlideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlide(currentSlideIndex = n);
+        }
+
+        function showSlide(n) {
+            const slides = document.getElementsByClassName("gallery-slide");
+            const dots = document.getElementsByClassName("dot");
+            
+            if (n > slides.length) { currentSlideIndex = 1; }
+            if (n < 1) { currentSlideIndex = slides.length; }
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+
+            slides[currentSlideIndex - 1].style.display = "block";
+            dots[currentSlideIndex - 1].className += " active";
+        }
+        
+        // 2. Animate Timeline Elements on Scroll
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: "0px",
+                threshold: 0.2
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const elementsToAnimate = document.querySelectorAll('.timeline-item');
+            elementsToAnimate.forEach(el => observer.observe(el));
+        });
+
+    </script>
+</body>
+</html>

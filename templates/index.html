@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rotaract Club Of NLJIET</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Swiper & AOS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"/>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* Advanced Navbar */
+    .navbar {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 15px 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar.scrolled {
+      background: rgba(11, 29, 58, 0.95);
+      backdrop-filter: blur(30px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 15px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      transition: all 0.4s ease;
+    }
+
+    .logo:hover {
+      background: rgba(255, 215, 0, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+    }
+
+    .rotaract-logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #ffd700, #ff6b6b, #4ecdc4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: rotate 10s linear infinite;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    }
+
+    .rotaract-logo::before {
+      content: '⚙️';
+      font-size: 22px;
+      animation: counter-rotate 10s linear infinite;
+    }
+
+    .rotaract-logo::after {
+      content: '';
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      border-radius: 50%;
+      border-top: 2px solid #ffd700;
+      animation: spin 3s linear infinite;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes counter-rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(-360deg); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      position: relative;
+      transition: all 0.4s ease;
+      padding: 10px 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      white-space: nowrap;
+      display: inline-block;
+    }
+
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #ffd700, #ff6b6b, #4ecdc4);
+      transition: all 0.4s ease;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    .nav-links li a:hover::after {
+      width: 80%;
+    }
+
+    .nav-links li a:hover {
+      color: #ffd700;
+      transform: translateY(-3px);
+      background: rgba(255, 215, 0, 0.1);
+      border-color: rgba(255, 215, 0, 0.3);
+      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+    }
+
+    .mobile-menu {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.6), rgba(118, 75, 162, 0.6), rgba(240, 147, 251, 0.6)),
+                  url('{{ url_for('static', filename='images/3.jpg') }}') center/cover no-repeat;
+      position: relative;
+      overflow: hidden;
+    }
+
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="%23ffffff" stroke-width="1" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+      animation: float 20s infinite linear;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="%23ffffff" stroke-width="1" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+      animation: float 20s infinite linear;
+      z-index: 1;
+    }
+
+    @keyframes pulse-bg {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    /* Floating Elements */
+    .floating-elements {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .floating-element {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float-up 15s infinite linear;
+    }
+
+    .floating-element:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      left: 10%;
+      animation-delay: 0s;
+      background: rgba(255, 215, 0, 0.2);
+    }
+
+    .floating-element:nth-child(2) {
+      width: 120px;
+      height: 120px;
+      left: 20%;
+      animation-delay: 2s;
+      background: rgba(255, 107, 107, 0.2);
+    }
+
+    .floating-element:nth-child(3) {
+      width: 60px;
+      height: 60px;
+      left: 70%;
+      animation-delay: 1s;
+      background: rgba(78, 205, 196, 0.2);
+    }
+
+    .floating-element:nth-child(4) {
+      width: 100px;
+      height: 100px;
+      left: 80%;
+      animation-delay: 3s;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    @keyframes float-up {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 900px;
+      padding: 0 20px;
+    }
+
+    .hero h1 {
+      font-size: 4.5rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 30px;
+      line-height: 1.1;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      0% { 
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+      }
+      100% { 
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.8);
+      }
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 50px;
+      font-weight: 400;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+      line-height: 1.5;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary, .btn-secondary {
+      padding: 18px 35px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 17px;
+      transition: all 0.4s ease;
+      border: 2px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ff6b6b, #ffd700, #4ecdc4);
+      color: #fff;
+      box-shadow: 0 10px 40px rgba(255, 107, 107, 0.5);
+      position: relative;
+      overflow: hidden;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-4px) scale(1.08);
+      box-shadow: 0 20px 60px rgba(255, 107, 107, 0.7);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(15px);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: #4ecdc4;
+      transform: translateY(-4px) scale(1.08);
+      box-shadow: 0 20px 50px rgba(78, 205, 196, 0.4);
+    }
+
+    /* Features Section */
+    .features {
+      padding: 100px 0;
+      background: #fff;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .section-title h2 {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #0b1d3a;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #0b1d3a, #667eea);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-title p {
+      font-size: 1.2rem;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+    }
+
+    .feature-card {
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(103, 126, 234, 0.1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(103, 126, 234, 0.2);
+    }
+
+    .feature-icon {
+      width: 90px;
+      height: 90px;
+      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      font-size: 2.2rem;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-icon::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+
+    .feature-card:hover .feature-icon::before {
+      transform: translateX(100%);
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0b1d3a;
+      margin-bottom: 15px;
+    }
+
+    .feature-card p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* Stats Section */
+    .stats {
+      padding: 100px 0;
+      background: linear-gradient(135deg, #0b1d3a, #1e3a5f);
+      color: #fff;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      text-align: center;
+    }
+
+    .stat-item h3 {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #ffd700;
+      margin-bottom: 10px;
+    }
+
+    .stat-item p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Footer */
+    .footer {
+      background: #0b1d3a;
+      color: #fff;
+      padding: 60px 0 30px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-section h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #ffd700;
+    }
+
+    .footer-section p, .footer-section li {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-section ul li a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section ul li a:hover {
+      color: #ffd700;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-icons a {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      background: #ffd700;
+      color: #0b1d3a;
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 30px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background: rgba(11, 29, 58, 0.95);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 50px;
+        transition: left 0.3s ease;
+        gap: 20px;
+      }
+
+      .nav-links.active {
+        left: 0;
+      }
+
+      .nav-links li a {
+        padding: 15px 25px;
+        font-size: 16px;
+        border-radius: 15px;
+        width: 200px;
+        text-align: center;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .section-title h2 {
+        font-size: 2rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-item h3 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Advanced Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="{{ url_for('home') }}" class="logo">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Rotaract Logo" style="height: 40px; border-radius: 50%; margin-right: 10px;">
+        <span class="rotaract-text">Rotaract Club Of NLJIET</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/home">Home</a></li>
+        <li><a href="/membership">Membership</a></li>
+        <li><a href="/events">Events</a></li>
+        <li><a href="/announcements">Announcements</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+      <button class="mobile-menu" id="mobileMenu">
+        <i class="bi bi-list"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" data-aos="fade-up">
+    <div class="floating-elements">
+      <div class="floating-element"></div>
+      <div class="floating-element"></div>
+      <div class="floating-element"></div>
+      <div class="floating-element"></div>
+    </div>
+    <div class="hero-content">
+      <h1>Empowering Youth Through Service</h1>
+      <p>Join a global community of young leaders making a positive impact in their communities and beyond</p>
+      <div class="cta-buttons">
+        <a href="/membership" class="btn-primary">
+          <i class="bi bi-rocket-takeoff"></i>
+          Join Our Mission
+        </a>
+        <a href="/events" class="btn-secondary">
+          <i class="bi bi-calendar-event"></i>
+          Explore Events
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" data-aos="fade-up">
+    <div class="container">
+      <div class="section-title">
+        <h2>Why Choose Rotaract?</h2>
+        <p>Discover the opportunities that await you in our dynamic community of changemakers</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="feature-icon">
+            <i class="bi bi-people-fill"></i>
+          </div>
+          <h3>Leadership Development</h3>
+          <p>Build essential leadership skills through hands-on experience and mentorship opportunities that prepare you for future success.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="feature-icon">
+            <i class="bi bi-globe"></i>
+          </div>
+          <h3>Global Network</h3>
+          <p>Connect with like-minded individuals from around the world and build lifelong friendships that span continents.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="feature-icon">
+            <i class="bi bi-heart-fill"></i>
+          </div>
+          <h3>Community Impact</h3>
+          <p>Make a real difference in your local community through meaningful service projects and sustainable initiatives.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats" data-aos="fade-up">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h3>200+</h3>
+          <p>Active Members</p>
+        </div>
+        <div class="stat-item">
+          <h3>50+</h3>
+          <p>Projects Completed</p>
+        </div>
+        <div class="stat-item">
+          <h3>10,000+</h3>
+          <p>Lives Impacted</p>
+        </div>
+        <div class="stat-item">
+          <h3>5+</h3>
+          <p>Years of Service</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" data-aos="fade-up">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About Rotaract</h3>
+          <p>We are a community of young professionals and students dedicated to creating positive change through service, leadership, and fellowship.</p>
+          <div class="social-icons">
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+            <a href="#"><i class="bi bi-twitter"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/membership">Become a Member</a></li>
+            <li><a href="/events">Upcoming Events</a></li>
+            <li><a href="/projects">Our Projects</a></li>
+            <li><a href="/gallery">Photo Gallery</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Info</h3>
+          <ul>
+            <li><i class="bi bi-geo-alt"></i> NLJIET Campus, Ahmedabad</li>
+            <li><i class="bi bi-envelope"></i> rotaract@nljiet.edu.in</li>
+            <li><i class="bi bi-phone"></i> +91 98765 43210</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Rotaract Club Of NLJIET. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 1000,
+      once: true,
+      offset: 100
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile menu toggle
+    const mobileMenu = document.getElementById('mobileMenu');
+    const navLinks = document.getElementById('navLinks');
+    const menuIcon = mobileMenu.querySelector('i');
+
+    mobileMenu.addEventListener('click', function() {
+      navLinks.classList.toggle('active');
+      if (navLinks.classList.contains('active')) {
+        menuIcon.classList.remove('bi-list');
+        menuIcon.classList.add('bi-x');
+      } else {
+        menuIcon.classList.remove('bi-x');
+        menuIcon.classList.add('bi-list');
+      }
+    });
+
+    // Close mobile menu when clicking on a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        menuIcon.classList.remove('bi-x');
+        menuIcon.classList.add('bi-list');
+      });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Add some interactive animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all feature cards and stat items
+    document.querySelectorAll('.feature-card, .stat-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

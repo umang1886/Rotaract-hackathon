@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Announcements | Rotaract Club</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts + Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f4f7fc;
+      color: #333;
+    }
+
+    /* ✅ NAVBAR (same as home page) */
+    .navbar {
+      background-color: #0b1d3a;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .navbar .logo {
+      color: #fff;
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .navbar ul li a:hover,
+    .navbar ul li a.active {
+      color: #ffd700;
+    }
+
+    @media(max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar ul {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
+    }
+
+    /* ✅ PAGE CONTENT */
+    .container {
+      max-width: 960px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    .page-title {
+      font-size: 36px;
+      font-weight: 700;
+      color: #0b1d3a;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .announcement-list {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+      padding: 24px 30px;
+      border-left: 6px solid #667eea;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      font-size: 22px;
+      color: #222;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: #888;
+      margin-top: 15px;
+      gap: 8px;
+    }
+
+    .meta i {
+      color: #667eea;
+    }
+
+    .back-btn {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .back-btn a {
+      display: inline-block;
+      padding: 12px 30px;
+      background: #0b1d3a;
+      color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: 0.3s ease;
+    }
+
+    .back-btn a:hover {
+      background: #ffd700;
+      color: #0b1d3a;
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      .card h3 {
+        font-size: 20px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ USER NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">Rotaract Club Of NLJIET</div>
+    <ul>
+      <li><a href="{{ url_for('home') }}">Home</a></li>
+      <li><a href="{{ url_for('membership') }}">Membership</a></li>
+      <li><a href="{{ url_for('view_announcements') }}" class="active">Announcements</a></li>
+      <li><a href="{{ url_for('contact') }}">Contact</a></li>
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- ✅ ANNOUNCEMENT CONTENT -->
+  <div class="container">
+    <div class="page-title">
+      <i class="fas fa-bullhorn"></i> Announcements
+    </div>
+
+    {% if announcements %}
+      <div class="announcement-list">
+        {% for ann in announcements %}
+          <div class="card">
+            <h3>{{ ann.title }}</h3>
+            <p>{{ ann.content }}</p>
+            <div class="meta">
+              <i class="far fa-clock"></i>
+              {{ ann.created_at.strftime('%B %d, %Y') }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p style="text-align: center; font-size: 18px; color: #777;">No announcements yet.</p>
+    {% endif %}
+
+    <div class="back-btn">
+      <a href="{{ url_for('home') }}"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </div>
+  </div>
+
+</body>
+</html>

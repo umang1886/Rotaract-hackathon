@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Membership Submissions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 220px;
+            background-color: #2c3e50;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin: 15px 0;
+        }
+
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            flex: 1;
+            padding: 30px;
+            background: #f4f7f9;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-collapse: collapse;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #34495e;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        img.thumbnail {
+            width: 60px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        img.thumbnail:hover {
+            transform: scale(1.8);
+            z-index: 99;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('registered_users') }}">Registered Users</a>
+    <a href="{{ url_for('view_members') }}">Members</a>
+    <a href="{{ url_for('logout_admin') }}">Logout</a>
+</div>
+
+<div class="content">
+    <h1>Membership Submissions</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Semester</th>
+                <th>Division</th>
+                <th>Screenshot</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>{{ member.name }}</td>
+                <td>{{ member.email }}</td>
+                <td>{{ member.mobile }}</td>
+                <td>{{ member.semester }}</td>
+                <td>{{ member.division }}</td>
+                <td>
+                    <a href="{{ url_for('static', filename='uploads/' ~ member.screenshot) }}" target="_blank">
+                        <img src="{{ url_for('static', filename='uploads/' ~ member.screenshot) }}" class="thumbnail" alt="Screenshot">
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khushiyon Ka Sangam | Rotaract Club Fellowship</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ---- CSS STYLES ---- */
+        
+        /* 1. Global Styles & Variables */
+        :root {
+            --rotaract-blue: #00458B;
+            --rotaract-gold: #FDB813;
+            --dark-text: #34495e;
+            --light-text: #7f8c8d;
+            --bg-color: #f9f9f9;
+            --white: #ffffff;
+            --accent-green: #27ae60;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            background: var(--bg-color);
+            color: var(--dark-text);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 1.5rem;
+        }
+
+        .content-section {
+            padding: 5rem 0;
+            overflow: hidden;
+        }
+        
+        /* 2. Header & Banner */
+        .event-banner {
+            position: relative;
+            height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            /* Placeholder Banner Image - Sabarmati Riverfront */
+            background: linear-gradient(rgba(0, 69, 139, 0.6), rgba(44, 62, 80, 0.6)), 
+                        url("{{ url_for('static', filename='images/Image7.jpg') }}") 
+                        no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed; /* Parallax Effect */
+        }
+
+        .banner-content {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSlideUp 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes fadeInSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .event-banner h1 {
+            font-family: var(--font-heading);
+            font-size: 5rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .event-banner p {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-top: 1rem;
+            display: inline-block;
+            padding: 0.6rem 2rem;
+            background: var(--rotaract-gold);
+            color: var(--dark-text);
+            border-radius: 50px;
+        }
+        
+        /* 3. Shared Section Heading Style */
+        .section-heading {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-heading h2 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            color: var(--rotaract-blue);
+        }
+        
+        .section-heading p.subtitle {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 700px;
+            margin: 0.5rem auto 0;
+        }
+
+        /* 4. Event Description Section */
+        #event-description .description-text {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--dark-text);
+        }
+
+        /* 5. Dynamic Timeline Section */
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background: #e0e0e0;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+        .timeline-item {
+            padding: 1rem 2.5rem;
+            position: relative;
+            width: 50%;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .timeline-item.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .timeline-item:nth-child(odd) { left: 0; }
+        .timeline-item:nth-child(even) { left: 50%; }
+
+        .timeline-icon {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: var(--white);
+            border: 3px solid var(--rotaract-blue);
+            border-radius: 50%;
+            top: 1.5rem;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--rotaract-blue);
+        }
+        .timeline-item:nth-child(odd) .timeline-icon { right: -25px; }
+        .timeline-item:nth-child(even) .timeline-icon { left: -25px; }
+
+        .timeline-content {
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+            position: relative;
+            border-top: 4px solid var(--rotaract-gold);
+        }
+        .timeline-content h3 { font-size: 1.2rem; font-weight: 600; color: var(--rotaract-blue); margin-bottom: 0.5rem; }
+        .timeline-content p { font-size: 0.95rem; color: var(--light-text); }
+        
+        /* 6. Activities Section with Animated Cards */
+        #event-activities { background-color: #ffffff; }
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .activity-card {
+            background: var(--bg-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid #eee;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .activity-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 69, 139, 0.1);
+        }
+        .card-icon {
+            font-size: 2.5rem;
+            height: 70px;
+            width: 70px;
+            line-height: 70px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--rotaract-blue), #0056b3);
+            color: var(--white);
+            box-shadow: 0 5px 10px rgba(0,69,139,0.3);
+        }
+        .activity-card.wellness .card-icon {
+            background: linear-gradient(45deg, var(--accent-green), #2ecc71);
+            box-shadow: 0 5px 10px rgba(39,174,96,0.3);
+        }
+        .activity-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--dark-text); font-weight: 600; }
+
+        /* 7. Image Gallery */
+        .gallery-container {
+            max-width: 900px;
+            margin: auto;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        .gallery-slide { display: none; animation: galleryFade 1.2s; }
+        @keyframes galleryFade { from { opacity: 0.5; } to { opacity: 1; } }
+        .gallery-slide img { width: 100%; vertical-align: middle; }
+
+        .gallery-nav {
+            cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%);
+            padding: 1rem; color: white; font-weight: bold; font-size: 1.5rem;
+            transition: background-color 0.3s ease; user-select: none;
+            background-color: rgba(0, 69, 139, 0.4);
+        }
+        .prev { left: 0; border-radius: 0 5px 5px 0; }
+        .next { right: 0; border-radius: 5px 0 0 5px; }
+        .gallery-nav:hover { background-color: rgba(0, 69, 139, 0.8); }
+
+        .dots-container { text-align: center; padding: 1.5rem 0 0; }
+        .dot {
+            cursor: pointer; height: 12px; width: 12px; margin: 0 5px;
+            background-color: #ccc; border-radius: 50%; display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .active, .dot:hover { background-color: var(--rotaract-gold); transform: scale(1.2); }
+
+        /* 8. Footer */
+        .site-footer {
+            background-color: var(--dark-text);
+            color: var(--white);
+            text-align: center;
+            padding: 2.5rem;
+            margin-top: 4rem;
+        }
+        .site-footer p { font-weight: 500; }
+
+        /* 9. Responsive Design */
+        @media (max-width: 992px) {
+            .event-banner h1 { font-size: 4rem; }
+            .section-heading h2 { font-size: 3rem; }
+        }
+
+        @media (max-width: 768px) {
+            .event-banner h1 { font-size: 3rem; }
+            .event-banner p { font-size: 1.1rem; padding: 0.5rem 1.5rem; }
+            .content-section { padding: 4rem 0; }
+
+            .timeline-container::after { left: 25px; }
+            .timeline-item { width: 100%; padding-left: 4.5rem; padding-right: 1rem; }
+            .timeline-item:nth-child(even) { left: 0; }
+            .timeline-icon { left: 0; }
+        }
+
+        @media (max-width: 576px) {
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="event-banner">
+        <div class="banner-content">
+            <h1>Khushiyon Ka Sangam</h1>
+            <p>Fellowship at Sabarmati Riverfront</p>
+        </div>
+    </header>
+
+    <main>
+        <section id="event-description" class="content-section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>A Riverside Retreat</h2>
+                    <p class="subtitle">On 9th February 2025, we gathered at the serene Sabarmati Riverfront for an unforgettable fellowship, strengthening bonds and creating cherished memories.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="event-timeline" class="content-section">
+            <div class="container">
+                 <div class="section-heading">
+                    <h2>Event Flow</h2>
+                </div>
+                <div class="timeline-container">
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-gamepad"></i></div>
+                        <div class="timeline-content">
+                            <h3>Energetic Gaming Session</h3>
+                            <p>The day kicked off with lively games like Ubhi-Kho, Dumb Charades, and Badminton, filling the air with laughter.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-praying-hands"></i></div>
+                        <div class="timeline-content">
+                            <h3>Surya Namaskar Break</h3>
+                            <p>A rejuvenating wellness session in the middle of the event to refresh our minds and bodies by the riverside.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-users"></i></div>
+                        <div class="timeline-content">
+                            <h3>Continued Fellowship</h3>
+                            <p>The enthusiasm continued with more games and interaction, strengthening the bonds of fellowship among all members.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fas fa-sunset"></i></div>
+                        <div class="timeline-content">
+                            <h3>Joyful Conclusion</h3>
+                            <p>The event wrapped up with a profound sense of unity and joy, leaving everyone with lasting memories.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="event-activities" class="content-section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Fun & Fellowship</h2>
+                </div>
+                <div class="activities-grid">
+                    <div class="activity-card">
+                        <div class="card-icon"><i class="fas fa-running"></i></div>
+                        <h3>Traditional Games</h3>
+                        <p>Members enjoyed classic Indian games like Ubhi-Kho, bringing a nostalgic and competitive flair.</p>
+                    </div>
+                    <div class="activity-card">
+                        <div class="card-icon"><i class="fas fa-theater-masks"></i></div>
+                        <h3>Dumb Charades</h3>
+                        <p>A hilarious session of creative acting and guessing that had everyone in splits.</p>
+                    </div>
+                    <div class="activity-card wellness">
+                        <div class="card-icon"><i class="fas fa-heartbeat"></i></div>
+                        <h3>Wellness Moment</h3>
+                        <p>The Surya Namaskar activity promoted physical and mental well-being among participants.</p>
+                    </div>
+                    <div class="activity-card">
+                        <div class="card-icon"><i class="fas fa-trophy"></i></div>
+                        <h3>Friendly Competition</h3>
+                        <p>From UNO to Badminton, the spirit of friendly rivalry kept the energy high throughout the day.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="event-gallery" class="content-section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Event Gallery</h2>
+                </div>
+                <div class="gallery-container">
+                    <div class="gallery-slide">
+                        <img src="{{ url_for('static', filename='images/Image5.jpg') }}">
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="{{ url_for('static', filename='images/Image6.jpg') }}">
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="{{ url_for('static', filename='images/Image5.jpg') }}">
+                    </div>
+                    
+
+                    <a class="gallery-nav prev" onclick="navigateSlides(-1)">&#10094;</a>
+                    <a class="gallery-nav next" onclick="navigateSlides(1)">&#10095;</a>
+                </div>
+                
+                <div class="dots-container">
+                    <span class="dot active" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 Rotaract Club | Fellowship Through Service</p>
+    </footer>
+
+    <script>
+        // ---- JAVASCRIPT LOGIC ----
+
+        // 1. Image Gallery Logic
+        let currentSlideIndex = 1;
+        showSlide(currentSlideIndex);
+
+        function navigateSlides(n) {
+            showSlide(currentSlideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlide(currentSlideIndex = n);
+        }
+
+        function showSlide(n) {
+            const slides = document.getElementsByClassName("gallery-slide");
+            const dots = document.getElementsByClassName("dot");
+            
+            if (n > slides.length) { currentSlideIndex = 1; }
+            if (n < 1) { currentSlideIndex = slides.length; }
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+
+            slides[currentSlideIndex - 1].style.display = "block";
+            dots[currentSlideIndex - 1].className += " active";
+        }
+        
+        // 2. Animate Timeline Elements on Scroll
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: "0px",
+                threshold: 0.2
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const elementsToAnimate = document.querySelectorAll('.timeline-item');
+            elementsToAnimate.forEach(el => observer.observe(el));
+        });
+
+    </script>
+</body>
+</html>
