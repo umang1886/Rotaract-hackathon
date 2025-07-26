@@ -1,149 +1,270 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Membership Form</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f4f7f9;
-            margin: 0;
-        }
+  <meta charset="UTF-8">
+  <title>Membership Form | Rotaract Club</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"/>
 
-        nav {
-            background-color: #2c3e50;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        nav h2 {
-            color: white;
-            margin: 0;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+      color: #333;
+      overflow-x: hidden;
+    }
 
-        .nav-links a {
-            color: white;
-            margin-left: 20px;
-            text-decoration: none;
-            font-weight: 500;
-        }
+    /* ✅ Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      z-index: 999;
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+    }
 
-        .form-container {
-            max-width: 500px;
-            background: white;
-            padding: 30px;
-            margin: 40px auto;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
+    .navbar .logo img {
+      height: 40px;
+      border-radius: 50%;
+    }
 
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
 
-        label {
-            display: block;
-            margin-top: 15px;
-        }
+    .nav-links a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 20px;
+      transition: 0.3s ease;
+    }
 
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffd700;
+    }
 
-        .submit-btn {
-            width: 100%;
-            background: #4CAF50;
-            color: white;
-            padding: 12px;
-            margin-top: 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+    .mobile-menu {
+      display: none;
+      font-size: 24px;
+      color: #fff;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
 
-        .qr {
-            text-align: center;
-            margin-top: 25px;
-        }
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        background: rgba(11, 29, 58, 0.95);
+        flex-direction: column;
+        width: 100%;
+        height: 100vh;
+        padding-top: 60px;
+        transition: left 0.3s ease;
+      }
 
-        .qr img {
-            width: 200px;
-            border-radius: 10px;
-            margin-top: 10px;
-        }
+      .nav-links.active {
+        left: 0;
+      }
 
-        .message {
-            background: #d4edda;
-            color: #155724;
-            padding: 10px;
-            text-align: center;
-            margin-top: 10px;
-            border-radius: 8px;
-        }
-    </style>
+      .mobile-menu {
+        display: block;
+      }
+    }
+
+    /* ✅ Membership Form Section */
+    .form-section {
+      padding: 120px 20px 60px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .form-container {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+
+    .form-container h2 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 30px;
+      color: #0b1d3a;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .submit-btn {
+      margin-top: 30px;
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background: #764ba2;
+      transform: scale(1.03);
+    }
+
+    .qr {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .qr img {
+      width: 180px;
+      margin-top: 10px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .message {
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #d4edda;
+      color: #155724;
+      border-radius: 8px;
+      text-align: center;
+    }
+  </style>
 </head>
-<body>
 
+<body>
 <!-- ✅ Navbar -->
-<nav>
-  <h2>Rotaract Portal</h2>
-  <div class="nav-links">
+<nav class="navbar" id="navbar">
+  <a href="{{ url_for('home') }}" class="logo">
+    <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Rotaract Logo">
+    Rotaract Club Of NLJIET
+  </a>
+  <div class="nav-links" id="navLinks">
     <a href="{{ url_for('home') }}">Home</a>
     <a href="{{ url_for('membership') }}">Membership</a>
+    <a href="{{ url_for('events') }}">Events</a>
     <a href="{{ url_for('view_announcements') }}">Announcements</a>
-    <a href="{{ url_for('contact') }}">Contact Us</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
     <a href="{{ url_for('logout') }}">Logout</a>
   </div>
+  <button class="mobile-menu" id="mobileMenu"><i class="bi bi-list"></i></button>
 </nav>
 
-<!-- Membership Form -->
-<div class="form-container">
+<!-- ✅ Membership Form -->
+<section class="form-section" data-aos="fade-up">
+  <div class="form-container">
     <h2>Membership Form</h2>
 
     {% if message %}
-        <div class="message">{{ message }}</div>
+      <div class="message">{{ message }}</div>
     {% endif %}
 
     <form method="POST" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
+      {{ form.hidden_tag() }}
 
-        <label>{{ form.name.label }}</label>
-        {{ form.name() }}
+      <label>{{ form.name.label }}</label>
+      {{ form.name() }}
 
-        <label>{{ form.email.label }}</label>
-        {{ form.email() }}
+      <label>{{ form.email.label }}</label>
+      {{ form.email() }}
 
-        <label>{{ form.mobile.label }}</label>
-        {{ form.mobile() }}
+      <label>{{ form.mobile.label }}</label>
+      {{ form.mobile() }}
 
-        <label>{{ form.semester.label }}</label>
-        {{ form.semester() }}
+      <label>{{ form.semester.label }}</label>
+      {{ form.semester() }}
 
-        <label>{{ form.division.label }}</label>
-        {{ form.division() }}
+      <label>{{ form.division.label }}</label>
+      {{ form.division() }}
 
-        <label>{{ form.screenshot.label }}</label>
-        {{ form.screenshot() }}
+      <label>{{ form.screenshot.label }}</label>
+      {{ form.screenshot() }}
 
-        <div class="qr">
-            <p><strong>Scan to Pay Membership Fee</strong></p>
-            <img src="{{ url_for('static', filename='qr.png') }}" alt="QR Code">
-        </div>
+      <div class="qr">
+        <p><strong>Scan to Pay Membership Fee</strong></p>
+        <img src="{{ url_for('static', filename='qr.png') }}" alt="QR Code">
+      </div>
 
-        {{ form.submit(class="submit-btn") }}
+      {{ form.submit(class="submit-btn") }}
     </form>
-</div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+
+  // Navbar scroll
+  window.addEventListener("scroll", function () {
+    const navbar = document.getElementById("navbar");
+    navbar.classList.toggle("scrolled", window.scrollY > 50);
+  });
+
+  // Mobile navbar toggle
+  const menu = document.getElementById("mobileMenu");
+  const navLinks = document.getElementById("navLinks");
+  const icon = menu.querySelector("i");
+
+  menu.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+    icon.classList.toggle("bi-list");
+    icon.classList.toggle("bi-x");
+  });
+
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+      icon.classList.add("bi-list");
+      icon.classList.remove("bi-x");
+    });
+  });
+</script>
 </body>
 </html>
