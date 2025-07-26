@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Member Score | Rotaract Club</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #2d3748;
+    }
+
+    nav {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav .logo {
+      display: flex;
+      align-items: center;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    nav .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 25px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 20px;
+      transition: 0.3s;
+    }
+
+    nav .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffd700;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 80px auto;
+      background: #fff;
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      color: #333;
+      margin-bottom: 40px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.1rem;
+    }
+
+    th, td {
+      padding: 18px;
+      text-align: center;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    th {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 1px;
+    }
+
+    tr:hover {
+      background-color: #f6f8fa;
+    }
+
+    .badge {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: inline-block;
+    }
+
+    .high { background: #38a169; color: white; }
+    .medium { background: #ed8936; color: white; }
+    .low { background: #e53e3e; color: white; }
+
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead tr {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 20px;
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        text-align: left;
+        font-weight: 600;
+        color: #555;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <a href="/" class="logo">Rotaract Club</a>
+    <div class="nav-links">
+      <a href="/home">Home</a>
+      <a href="/membership">Membership</a>
+      <a href="/events">Events</a>
+      <a href="/member-score">Member Score</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h1>Member Participation & Activity Score</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Member Name</th>
+          <th>Event Scores</th>
+          <th>Activity %</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for member in members %}
+        <tr>
+          <td data-label="Member Name">{{ member.name }}</td>
+          <td data-label="Event Scores">
+            {{ member.scores | join(" | ") }}
+          </td>
+          <td data-label="Activity %">{{ member.percent }}</td>
+          <td data-label="Status">
+            {% set value = member.percent.replace('%', '') | int %}
+            {% if value >= 75 %}
+              <span class="badge high">Active</span>
+            {% elif value >= 40 %}
+              <span class="badge medium">Moderate</span>
+            {% else %}
+              <span class="badge low">Inactive</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

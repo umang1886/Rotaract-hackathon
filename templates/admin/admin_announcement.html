@@ -1,71 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Post Announcement | Admin Panel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #e0ecff, #f9f4ff);
       display: flex;
-      justify-content: center;
-      align-items: center;
+      background: linear-gradient(135deg, #667eea, #764ba2);
       min-height: 100vh;
-      padding: 40px 20px;
     }
-
+    .sidebar {
+      width: 280px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      height: 100vh;
+      padding: 0;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      position: sticky;
+      top: 0;
+    }
+    .sidebar-header {
+      padding: 30px 25px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+    .sidebar h2 {
+      font-size: 24px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sidebar h2::before {
+      content: "⚡";
+      font-size: 28px;
+    }
+    .sidebar-nav {
+      padding: 20px 0;
+    }
+    .sidebar a {
+      color: #4a5568;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 16px 25px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-left: 3px solid transparent;
+    }
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: linear-gradient(90deg, rgba(102, 126, 234, 0.1), rgba(102, 126, 234, 0.05));
+      color: #667eea;
+      border-left-color: #667eea;
+      transform: translateX(5px);
+    }
+    .sidebar a i {
+      font-size: 18px;
+      width: 20px;
+      text-align: center;
+    }
+    .content {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
     .form-container {
       background: white;
-      padding: 40px 35px;
+      padding: 40px;
       border-radius: 20px;
-      max-width: 600px;
-      width: 100%;
+      max-width: 700px;
+      margin: auto;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
       border-left: 6px solid #667eea;
     }
-
     h2 {
       text-align: center;
       margin-bottom: 30px;
       color: #0b1d3a;
       font-size: 28px;
     }
-
-    form p {
-      margin-bottom: 20px;
-    }
-
+    form p { margin-bottom: 20px; }
     label {
       font-weight: 600;
       display: block;
       margin-bottom: 8px;
       color: #444;
     }
-
-    input[type="text"],
-    textarea {
+    input[type="text"], textarea {
       width: 100%;
-      padding: 12px 14px;
+      padding: 12px;
       border: 1px solid #ccc;
       border-radius: 10px;
       font-size: 15px;
       font-family: inherit;
       transition: 0.3s ease;
-      resize: vertical;
-      min-height: 50px;
     }
-
-    input[type="text"]:focus,
-    textarea:focus {
+    input[type="text"]:focus, textarea:focus {
       outline: none;
       border-color: #667eea;
       box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
     }
-
     input[type="submit"] {
       background: linear-gradient(to right, #667eea, #764ba2);
       border: none;
@@ -76,74 +120,51 @@
       font-weight: 600;
       cursor: pointer;
       transition: 0.3s ease;
-      margin-top: 10px;
     }
-
     input[type="submit"]:hover {
       transform: scale(1.05);
-      background: linear-gradient(to right, #764ba2, #667eea);
     }
-
     .success-message {
       text-align: center;
       color: green;
       font-size: 16px;
       margin-bottom: 20px;
     }
-
-    .back-link {
-      text-align: center;
-      margin-top: 30px;
-    }
-
-    .back-link a {
-      text-decoration: none;
-      color: #667eea;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .back-link a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 600px) {
-      .form-container {
-        padding: 30px 20px;
-      }
-
-      h2 {
-        font-size: 22px;
-      }
-    }
   </style>
 </head>
 <body>
-
-  <div class="form-container">
-    <h2><i class="fas fa-bullhorn"></i> Post New Announcement</h2>
-
-    {% if message %}
-      <div class="success-message">{{ message }}</div>
-    {% endif %}
-
-    <form method="POST">
-      {{ form.hidden_tag() }}
-      <p>
-        {{ form.title.label }}<br>
-        {{ form.title(size=60) }}
-      </p>
-      <p>
-        {{ form.content.label }}<br>
-        {{ form.content(rows=5, cols=60) }}
-      </p>
-      <p>{{ form.submit() }}</p>
-    </form>
-
-    <div class="back-link">
-      <a href="{{ url_for('admin_dashboard') }}"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>Admin Panel</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="{{ url_for('admin_dashboard') }}"><i class="fas fa-chart-line"></i> Dashboard</a>
+      <a href="{{ url_for('registered_users') }}"><i class="fas fa-users"></i> Registered Users</a>
+      <a href="{{ url_for('view_members') }}"><i class="fas fa-id-badge"></i> Members</a>
+      <a href="{{ url_for('admin_contact') }}"><i class="fas fa-envelope"></i> Contact Messages</a>
+      <a href="{{ url_for('admin_announcement') }}" class="active"><i class="fas fa-bullhorn"></i> Announcements</a>
+      <a href="{{ url_for('logout_admin') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+  </div>
+  <div class="content">
+    <div class="form-container">
+      <h2><i class="fas fa-bullhorn"></i> Post New Announcement</h2>
+      {% if message %}
+        <div class="success-message">{{ message }}</div>
+      {% endif %}
+      <form method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+          {{ form.title.label }}<br>
+          {{ form.title(size=60) }}
+        </p>
+        <p>
+          {{ form.content.label }}<br>
+          {{ form.content(rows=5, cols=60) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+      </form>
     </div>
   </div>
-
 </body>
 </html>

@@ -246,6 +246,27 @@ def tree_plantation():
 def women_empowerment():
     return render_template('user/event5.html')
 
+@app.route('/member-score')
+def member_score():
+    members = [
+        {
+            'name': 'Amit Sharma',
+            'scores': ['🌱 Clean Drive', '🩺 Blood Camp', '📚 Book Donation', '🎤 Youth Talk'],
+            'percent': '100%'
+        },
+        {
+            'name': 'Sneha Patel',
+            'scores': ['🌱 Clean Drive', '📚 Book Donation'],
+            'percent': '60%'
+        },
+        {
+            'name': 'Rahul Mehta',
+            'scores': ['🩺 Blood Camp'],
+            'percent': '25%'
+        }
+    ]
+    return render_template('user/member_score.html', members=members)
+
 
 
 
@@ -345,6 +366,28 @@ def admin_announcement():
         message = "Announcement posted successfully!"
     
     return render_template('admin/admin_announcement.html', form=form, message=message)
+
+@app.route('/admin/dashboard/members/delete/<int:member_id>', methods=['POST'])
+@admin_required
+def delete_member(member_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Delete screenshot file (optional)
+    cursor.execute("SELECT screenshot FROM membership WHERE id = %s", (member_id,))
+    result = cursor.fetchone()
+    if result and result['screenshot']:
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], result['screenshot'])
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
+    # Delete member from DB
+    cursor.execute("DELETE FROM membership WHERE id = %s", (member_id,))
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('view_members'))
+
 
 
 

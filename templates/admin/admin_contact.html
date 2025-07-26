@@ -1,116 +1,176 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Contact Messages</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: #f4f6f8;
-            display: flex;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Messages</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .sidebar {
-            width: 220px;
-            background-color: #2c3e50;
-            color: white;
-            height: 100vh;
-            padding: 20px;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+    }
 
-        .sidebar h2 {
-            margin-bottom: 20px;
-        }
+    .sidebar {
+      width: 260px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      height: 100vh;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+    }
 
-        .sidebar a {
-            color: white;
-            display: block;
-            margin: 15px 0;
-            text-decoration: none;
-            font-weight: 500;
-        }
+    .sidebar-header {
+      padding: 30px 25px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
 
-        .sidebar a:hover {
-            text-decoration: underline;
-        }
+    .sidebar h2 {
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        .content {
-            flex: 1;
-            padding: 30px;
-        }
+    .sidebar h2::before {
+      content: \"📩\";
+    }
 
-        h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
+    .sidebar-nav {
+      padding: 20px 0;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            border-radius: 12px;
-            overflow: hidden;
-        }
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 25px;
+      text-decoration: none;
+      color: #4a5568;
+      font-weight: 500;
+      transition: 0.3s ease;
+      border-left: 3px solid transparent;
+    }
 
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: rgba(102, 126, 234, 0.1);
+      border-left-color: #667eea;
+      color: #667eea;
+      transform: translateX(5px);
+    }
 
-        th {
-            background: #3498db;
-            color: white;
-        }
+    .sidebar a i {
+      font-size: 18px;
+      width: 20px;
+    }
 
-        tr:hover {
-            background: #f1f1f1;
-        }
+    .content {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
 
-        td {
-            color: #333;
-        }
-    </style>
+    h1 {
+      font-size: 30px;
+      color: white;
+      margin-bottom: 20px;
+      text-shadow: 1px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    table {
+      width: 100%;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      overflow: hidden;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 16px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #34495e;
+      color: white;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    tr:hover {
+      background: #f9f9f9;
+    }
+
+    td {
+      font-size: 15px;
+      color: #333;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+      }
+      .content {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <h2>Admin Panel</h2>
-        <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
-        <a href="{{ url_for('registered_users') }}">Registered Users</a>
-        <a href="{{ url_for('view_members') }}">Members</a>
-        <a href="{{ url_for('admin_contact') }}">Contact Messages</a>
-        <a href="{{ url_for('logout_admin') }}">Logout</a>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>Admin Panel</h2>
     </div>
+    <nav class="sidebar-nav">
+      <a href="{{ url_for('admin_dashboard') }}"><i class="fas fa-chart-line"></i> Dashboard</a>
+      <a href="{{ url_for('registered_users') }}"><i class="fas fa-users"></i> Registered Users</a>
+      <a href="{{ url_for('view_members') }}"><i class="fas fa-id-badge"></i> Members</a>
+      <a href="{{ url_for('admin_contact') }}" class="active"><i class="fas fa-envelope"></i> Contact Messages</a>
+      <a href="{{ url_for('admin_announcement') }}"><i class="fas fa-bullhorn"></i> Announcements</a>
+      <a href="{{ url_for('logout_admin') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+  </div>
 
-    <div class="content">
-        <h1>Contact Messages</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Mobile</th>
-                    <th>Message</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for message in contacts %}
-                <tr>
-                    <td>{{ message.id }}</td>
-                    <td>{{ message.name }}</td>
-                    <td>{{ message.email }}</td>
-                    <td>{{ message.mobile }}</td>
-                    <td>{{ message.message }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+  <!-- Main Content -->
+  <div class="content">
+    <h1>Contact Messages</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for message in contacts %}
+        <tr>
+          <td>{{ message.id }}</td>
+          <td>{{ message.name }}</td>
+          <td>{{ message.email }}</td>
+          <td>{{ message.mobile }}</td>
+          <td>{{ message.message }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
 </body>
 </html>
